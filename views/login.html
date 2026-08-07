@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberVault - Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="flex-center">
+    <main class="login-container glass-panel">
+        <div class="login-header">
+            <h2>CyberVault Auth</h2>
+            <p>Enter your employee credentials</p>
+        </div>
+        
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Employee ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="btn btn-block">Authenticate</button>
+            <p id="error-message" class="error-text hidden"></p>
+        </form>
+        
+        <div class="login-footer">
+            <a href="/">← Back to Home</a>
+        </div>
+    </main>
+    <script src="/js/main.js"></script>
+</body>
+</html>

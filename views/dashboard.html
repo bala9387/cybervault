@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberVault - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <aside class="sidebar glass-panel">
+            <div class="logo">CyberVault</div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="#">Security Logs</a></li>
+                    <li><a href="#">Access Control</a></li>
+                    <li><a href="/hints">Hints</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-danger btn-block">Logout</button>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header glass-panel">
+                <div class="user-info">
+                    <h3>Employee Profile</h3>
+                    <p id="employeeName">Loading...</p>
+                    <p class="badge" id="employeeDept">Loading...</p>
+                </div>
+            </header>
+
+            <section class="dashboard-grid">
+                <div class="card glass-panel col-span-2">
+                    <h2>Company Announcements</h2>
+                    <div class="announcement">
+                        <h4>Mandatory Security Update</h4>
+                        <p>All employees must update their access tokens by Friday. Ensure you review the new API documentation.</p>
+                    </div>
+                </div>
+
+                <div class="card glass-panel">
+                    <h2>System Status</h2>
+                    <ul class="status-list" id="systemStatusList">
+                        <li><strong>Status:</strong> Online</li>
+                        <li><strong>Active Services:</strong> 4</li>
+                        <li><strong>Network:</strong> Secure</li>
+                    </ul>
+                </div>
+                
+                <div class="card glass-panel">
+                    <h2>Recent Activity</h2>
+                    <ul class="activity-list">
+                        <li>Successful login detected.</li>
+                        <li>Token generated.</li>
+                        <li>Profile data fetched.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="/js/main.js"></script>
+    <script>
+        // Ensure user is logged in
+        if (!localStorage.getItem('token')) {
+            window.location.href = '/login';
+        }
+        
+        // Load dashboard data when ready
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof loadDashboardData === 'function') {
+                loadDashboardData();
+            }
+        });
+    </script>
+</body>
+</html>
