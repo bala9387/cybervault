@@ -39,7 +39,12 @@ app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`CyberVault CTF server running at http://localhost:${PORT}`);
-});
+// Start server locally
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`CyberVault CTF server running at http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
+
