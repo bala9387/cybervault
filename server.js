@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 });
 
 // Serve static HTML views
-const views = ['index', 'login', 'dashboard', 'hints', 'about', 'help', 'contact'];
+const views = ['index', 'login', 'dashboard', 'hints', 'about', 'help', 'contact', 'submit'];
 
 views.forEach(view => {
     const route = view === 'index' ? '/' : `/${view}`;

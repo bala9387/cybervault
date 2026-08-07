@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberVault - Flag Submission</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .submit-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+        }
+
+        .flag-input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .flag-input-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .flag-input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .flag-input-group input:focus {
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+        }
+
+        .flag-input-group input.valid {
+            border-color: #22c55e;
+        }
+
+        .flag-input-group input.invalid {
+            border-color: #ef4444;
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-box.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+        }
+
+        .result-box.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+        }
+
+        .result-box h2 {
+            margin-bottom: 0.75rem;
+        }
+
+        .final-flag {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid #06b6d4;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #06b6d4;
+            letter-spacing: 0.05em;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            word-break: break-all;
+        }
+
+        .progress-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #1e293b;
+            transition: background 0.4s;
+        }
+
+        .progress-step.done {
+            background: #06b6d4;
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">CyberVault</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/hints">Hints</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/help">Help</a></li>
+            <li><a href="/submit" class="active">Submit Flags</a></li>
+        </ul>
+    </nav>
+
+    <main class="submit-container glass-panel">
+        <div class="hero" style="margin-bottom:1.5rem;">
+            <h1>🏁 Flag Submission</h1>
+            <p>Submit all four flags you discovered to unlock the final flag.</p>
+        </div>
+
+        <!-- Progress tracker -->
+        <div class="progress-bar">
+            <div class="progress-step" id="step1"></div>
+            <div class="progress-step" id="step2"></div>
+            <div class="progress-step" id="step3"></div>
+            <div class="progress-step" id="step4"></div>
+        </div>
+
+        <form id="flagForm">
+            <div class="flag-input-group">
+                <label>Challenge 1 — HTML Source</label>
+                <input type="text" id="flag1" placeholder="FLAG{...}" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="flag-input-group">
+                <label>Challenge 2 — Session Cookie</label>
+                <input type="text" id="flag2" placeholder="FLAG{...}" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="flag-input-group">
+                <label>Challenge 3 — JWT Payload</label>
+                <input type="text" id="flag3" placeholder="FLAG{...}" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="flag-input-group">
+                <label>Challenge 4 — API Key</label>
+                <input type="text" id="flag4" placeholder="FLAG{...}" autocomplete="off" spellcheck="false">
+            </div>
+
+            <button type="submit" class="btn btn-block" style="margin-top:1rem;">Submit All Flags</button>
+        </form>
+
+        <!-- Success result -->
+        <div class="result-box success" id="successBox">
+            <h2 style="color:#22c55e;">🎉 All Flags Correct!</h2>
+            <p>Outstanding work, Security Analyst! You have successfully infiltrated the CyberVault system.</p>
+            <p>Here is your final master flag:</p>
+            <div class="final-flag" id="finalFlag"></div>
+        </div>
+
+        <!-- Error result -->
+        <div class="result-box error" id="errorBox">
+            <h2 style="color:#ef4444;">❌ Incorrect Flags</h2>
+            <p id="errorMsg">One or more flags are incorrect. Keep investigating!</p>
+        </div>
+    </main>
+
+    <script>
+        const inputs = [
+            document.getElementById('flag1'),
+            document.getElementById('flag2'),
+            document.getElementById('flag3'),
+            document.getElementById('flag4')
+        ];
+        const steps = [
+            document.getElementById('step1'),
+            document.getElementById('step2'),
+            document.getElementById('step3'),
+            document.getElementById('step4')
+        ];
+
+        // Live progress indicator as user types
+        inputs.forEach((input, i) => {
+            input.addEventListener('input', () => {
+                const val = input.value.trim();
+                const isFilled = val.startsWith('FLAG{') && val.endsWith('}') && val.length > 7;
+                steps[i].classList.toggle('done', isFilled);
+                input.classList.remove('valid', 'invalid');
+            });
+        });
+
+        document.getElementById('flagForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const successBox = document.getElementById('successBox');
+            const errorBox   = document.getElementById('errorBox');
+            const finalFlag  = document.getElementById('finalFlag');
+            const errorMsg   = document.getElementById('errorMsg');
+
+            successBox.style.display = 'none';
+            errorBox.style.display   = 'none';
+
+            const flags = inputs.map(i => i.value.trim());
+
+            try {
+                const res = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ flags })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    inputs.forEach(i => { i.classList.add('valid'); i.classList.remove('invalid'); });
+                    steps.forEach(s => s.classList.add('done'));
+                    finalFlag.textContent = data.finalFlag;
+                    successBox.style.display = 'block';
+                    errorBox.style.display   = 'none';
+                } else {
+                    // Mark incorrect inputs
+                    if (data.wrong) {
+                        inputs.forEach((inp, i) => {
+                            inp.classList.remove('valid', 'invalid');
+                            inp.classList.add(data.wrong.includes(i + 1) ? 'invalid' : 'valid');
+                        });
+                    }
+                    errorMsg.textContent = data.message || 'One or more flags are incorrect.';
+                    errorBox.style.display   = 'block';
+                    successBox.style.display = 'none';
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Server error. Please try again.';
+                errorBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
