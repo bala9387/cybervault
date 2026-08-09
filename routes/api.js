@@ -47,41 +47,5 @@ router.get('/profile', (req, res) => {
     }
 });
 
-// Flag Submission Endpoint
-router.post('/submit', (req, res) => {
-    const { flags } = req.body;
-    
-    if (!flags || !Array.isArray(flags) || flags.length !== 4) {
-        return res.status(400).json({ success: false, message: "Please provide all 4 flags." });
-    }
-
-    const expectedFlags = [
-        "FLAG{SOURCE_INSPECTOR}",
-        "FLAG{COOKIE_COLLECTOR}",
-        "FLAG{TOKEN_DECODER}",
-        "FLAG{API_EXPLORER}"
-    ];
-
-    const wrong = [];
-    flags.forEach((flag, index) => {
-        if (flag.trim() !== expectedFlags[index]) {
-            wrong.push(index + 1);
-        }
-    });
-
-    if (wrong.length === 0) {
-        res.json({
-            success: true,
-            finalFlag: "FLAG{CYBERVAULT_MASTER_HACKER}"
-        });
-    } else {
-        res.json({
-            success: false,
-            wrong,
-            message: `Incorrect flags at position(s): ${wrong.join(', ')}`
-        });
-    }
-});
-
 module.exports = router;
 
