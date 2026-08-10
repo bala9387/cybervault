@@ -60,6 +60,16 @@ Here is a guide on what you will need to inspect to find all the flags, without 
 **Tool used**: Browser Developer Tools / Network / Input manipulation.
 **Hint**: On the dashboard, notice that employee records are fetched via `/api/user/105`. What happens if you change the ID to `1`?
 
+### Challenge 7 (HARD): Server-Side Request Forgery (SSRF)
+**Goal**: Bypass the firewall filter blocking `localhost` and `127.0.0.1` to access an internal microservice.
+**Tool used**: Network / Webhook Tester.
+**Hint**: `POST /api/webhook` takes a `url`. It blocks `localhost` and `127.0.0.1`. Can you use alternative IP formats (like `127.1`, `0x7f000001`, `2130706433`, `[::1]`, or `nip.io`) to target `/internal/secret-key`?
+
+### Challenge 8 (HARD): Blind Time/Boolean SQL Injection
+**Goal**: Extract the secret flag character-by-character from a boolean-only endpoint.
+**Tool used**: Automation Scripting (Python / Curl) or SQLMap.
+**Hint**: `GET /api/verify-license?key=...` returns `{ "valid": true/false }`. Try injecting boolean payloads like `CV-2026' AND SUBSTR((SELECT flag FROM secrets), 1, 1) = 'F' --`.
+
 ## Learning Objectives
 By completing this CTF, you will learn how to:
 - Read and inspect HTML source code.

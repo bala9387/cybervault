@@ -67,6 +67,28 @@
                     </div>
                     <pre id="userRecordResult" style="background:rgba(15,23,42,0.8); padding:1rem; border-radius:6px; font-family:monospace; font-size:0.875rem; color:#06b6d4; overflow-x:auto; white-space:pre-wrap;">Click "Lookup Record" to query record #105...</pre>
                 </div>
+
+                <!-- SSRF Card -->
+                <div class="card glass-panel col-span-2">
+                    <h2>External Webhook Gateway (SSRF Challenge)</h2>
+                    <p style="font-size:0.9rem; color:#94a3b8; margin-bottom:1rem;">Pings webhooks via <code>POST /api/webhook</code>. Firewall blocks <code>localhost</code> and <code>127.0.0.1</code>.</p>
+                    <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem;">
+                        <input type="text" id="ssrfUrlInput" value="http://example.com/avatar" style="flex:1; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
+                        <button id="ssrfBtn" class="btn" style="padding:0.5rem 1rem;">Test Webhook</button>
+                    </div>
+                    <pre id="ssrfResult" style="background:rgba(15,23,42,0.8); padding:1rem; border-radius:6px; font-family:monospace; font-size:0.875rem; color:#06b6d4; overflow-x:auto; white-space:pre-wrap;">Click "Test Webhook" to trigger SSRF fetch...</pre>
+                </div>
+
+                <!-- Blind SQLi Card -->
+                <div class="card glass-panel col-span-2">
+                    <h2>License Key Verification (Blind SQLi Challenge)</h2>
+                    <p style="font-size:0.9rem; color:#94a3b8; margin-bottom:1rem;">Verifies license keys via <code>GET /api/verify-license?key=...</code>. Only returns boolean <code>{ "valid": true/false }</code>.</p>
+                    <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem;">
+                        <input type="text" id="sqliInput" value="CV-2026" style="flex:1; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
+                        <button id="sqliBtn" class="btn" style="padding:0.5rem 1rem;">Verify License</button>
+                    </div>
+                    <pre id="sqliResult" style="background:rgba(15,23,42,0.8); padding:1rem; border-radius:6px; font-family:monospace; font-size:0.875rem; color:#06b6d4; overflow-x:auto; white-space:pre-wrap;">Click "Verify License" to check key...</pre>
+                </div>
             </section>
         </main>
     </div>

@@ -59,6 +59,44 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchUserRecord(id);
         });
     }
+
+    // SSRF Button Handling
+    const ssrfBtn = document.getElementById('ssrfBtn');
+    if (ssrfBtn) {
+        ssrfBtn.addEventListener('click', async () => {
+            const url = document.getElementById('ssrfUrlInput').value;
+            const resElem = document.getElementById('ssrfResult');
+            resElem.textContent = "Sending webhook fetch request...";
+            try {
+                const res = await fetch('/api/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                const data = await res.json();
+                resElem.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                resElem.textContent = "Error testing webhook.";
+            }
+        });
+    }
+
+    // Blind SQLi Button Handling
+    const sqliBtn = document.getElementById('sqliBtn');
+    if (sqliBtn) {
+        sqliBtn.addEventListener('click', async () => {
+            const key = document.getElementById('sqliInput').value;
+            const resElem = document.getElementById('sqliResult');
+            resElem.textContent = "Verifying license key...";
+            try {
+                const res = await fetch(`/api/verify-license?key=${encodeURIComponent(key)}`);
+                const data = await res.json();
+                resElem.textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                resElem.textContent = "Error verifying license.";
+            }
+        });
+    }
 });
 
 // Function to load dashboard data (called from dashboard.html)
