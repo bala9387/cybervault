@@ -55,6 +55,11 @@ Here is a guide on what you will need to inspect to find all the flags, without 
 **Tool used**: Command Line (`curl`).
 **Hint**: Visit `http://localhost:3000/robots.txt` to find the hidden endpoint (`/secret-vault`). Visiting it in a browser returns a 404 error, but fetching it via terminal using `curl http://localhost:3000/secret-vault` reveals the flag!
 
+### Challenge 6: Insecure Direct Object Reference (IDOR)
+**Goal**: Manipulate the employee record ID parameter to view the Admin/CEO profile.
+**Tool used**: Browser Developer Tools / Network / Input manipulation.
+**Hint**: On the dashboard, notice that employee records are fetched via `/api/user/105`. What happens if you change the ID to `1`?
+
 ## Learning Objectives
 By completing this CTF, you will learn how to:
 - Read and inspect HTML source code.

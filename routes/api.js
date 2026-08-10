@@ -47,5 +47,35 @@ router.get('/profile', (req, res) => {
     }
 });
 
+// In-Memory user database for IDOR Challenge
+const userDatabase = {
+    "1": {
+        id: 1,
+        username: "admin_ceo",
+        name: "CyberVault Admin (CEO)",
+        role: "Administrator",
+        email: "ceo@cybervault.local",
+        flag: "FLAG{IDOR_ACCESS_CONTROL_BYPASS}"
+    },
+    "105": {
+        id: 105,
+        username: "guest_employee",
+        name: "Guest Employee",
+        role: "User",
+        email: "guest@cybervault.local",
+        note: "Standard employee access record."
+    }
+};
+
+// IDOR Challenge Endpoint
+router.get('/user/:id', (req, res) => {
+    const userId = req.params.id;
+    if (userDatabase[userId]) {
+        res.json(userDatabase[userId]);
+    } else {
+        res.status(404).json({ error: "Employee record ID not found." });
+    }
+});
+
 module.exports = router;
 

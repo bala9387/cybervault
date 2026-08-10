@@ -47,7 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('token');
-            window.location.href = '/login';
+    // IDOR Lookup Button Handling
+    const fetchUserBtn = document.getElementById('fetchUserBtn');
+    if (fetchUserBtn) {
+        fetchUserBtn.addEventListener('click', () => {
+            const id = document.getElementById('userIdInput').value || '105';
+            fetchUserRecord(id);
         });
     }
 });
@@ -75,7 +80,24 @@ async function loadDashboardData() {
             console.error('Failed to load profile');
         }
 
+        // IDOR Challenge Initial Fetch
+        fetchUserRecord('105');
+
     } catch (err) {
         console.error('Error loading dashboard:', err);
     }
 }
+
+// IDOR Challenge helper function
+async function fetchUserRecord(id) {
+    const resultElem = document.getElementById('userRecordResult');
+    if (!resultElem) return;
+    try {
+        const res = await fetch(`/api/user/${id}`);
+        const data = await res.json();
+        resultElem.textContent = JSON.stringify(data, null, 2);
+    } catch (err) {
+        resultElem.textContent = "Error fetching user record.";
+    }
+}
+
