@@ -11,15 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Set session cookie middleware for Challenge 2
-app.use((req, res, next) => {
-    if (!req.cookies.session) {
-        // Not marked HttpOnly, as per requirements
-        res.cookie('session', 'CV_SESSION_RANDOM_STRING', { httpOnly: false });
-    }
-    next();
-});
-
 // Serve static HTML views
 const views = ['index', 'login', 'dashboard', 'hints', 'about', 'help', 'contact'];
 
