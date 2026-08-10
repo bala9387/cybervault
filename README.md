@@ -50,6 +50,11 @@ Here is a guide on what you will need to inspect to find all the flags, without 
 **Tool used**: Browser Developer Tools -> **Sources** tab or **Network** tab.
 **Hint**: The frontend dashboard needs to fetch your profile. To do this, it uses a secret API key. Look at the frontend JavaScript code or inspect the headers of the network request to `/api/profile`. 
 
+### Challenge 5: Robots.txt & 404 Curl Challenge
+**Goal**: Discover the disallowed path in `robots.txt` and use `curl` to fetch the flag from a 404 error page.
+**Tool used**: Command Line (`curl`).
+**Hint**: Visit `http://localhost:3000/robots.txt` to find the hidden endpoint (`/secret-vault`). Visiting it in a browser returns a 404 error, but fetching it via terminal using `curl http://localhost:3000/secret-vault` reveals the flag!
+
 ## Learning Objectives
 By completing this CTF, you will learn how to:
 - Read and inspect HTML source code.

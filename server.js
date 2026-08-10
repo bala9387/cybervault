@@ -34,6 +34,25 @@ views.forEach(view => {
 const apiRoutes = require('./routes/api');
 app.use('/api', apiRoutes);
 
+// Robots.txt Challenge Route
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send("User-agent: *\nDisallow: /secret-vault");
+});
+
+// Hidden 404 Route requiring curl
+app.get('/secret-vault', (req, res) => {
+    const userAgent = req.headers['user-agent'] || '';
+    res.status(404);
+    if (userAgent.toLowerCase().includes('curl')) {
+        res.type('text/plain');
+        res.send("404 Not Found - Flag: FLAG{CURL_ROBOTS_MASTER}\n");
+    } else {
+        res.send("<html><body><h1>404 Not Found</h1><p>Hint: Use curl to command line inspect this endpoint.</p></body></html>");
+    }
+});
+
+
 // Catch all for 404
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'views', 'index.html'));
