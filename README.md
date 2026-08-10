@@ -45,10 +45,10 @@ Here is a guide on what you will need to inspect to find all the flags, without 
 **Tool used**: Command Line (`curl`).
 **Hint**: Visit `http://localhost:3000/robots.txt` to find the hidden endpoint (`/secret-vault`). Visiting it in a browser returns a 404 error, but fetching it via terminal using `curl http://localhost:3000/secret-vault` reveals the flag!
 
-### Challenge 4 (HARD): Server-Side Request Forgery (SSRF)
-**Goal**: Bypass the firewall filter blocking `localhost` and `127.0.0.1` to access an internal microservice.
-**Tool used**: Network / Webhook Tester.
-**Hint**: `POST /api/webhook` takes a `url`. It blocks `localhost` and `127.0.0.1`. Can you use alternative IP formats (like `127.1`, `0x7f000001`, `2130706433`, `[::1]`, or `nip.io`) to target `/internal/secret-key`?
+### Challenge 4: Cross-Site Request Forgery (CSRF)
+**Goal**: Execute a state-changing credit transfer request to an unvalidated endpoint.
+**Tool used**: Network / Web Form POST.
+**Hint**: `POST /api/transfer` takes `recipient` and `amount` parameters in the body without anti-CSRF token or SameSite validation. Submitting a transfer request reveals the flag!
 
 ## Learning Objectives
 By completing this CTF, you will learn how to:

@@ -26,42 +26,19 @@ router.post('/login', (req, res) => {
     }
 });
 
-// Challenge 7: SSRF Webhook Endpoint
-router.post('/webhook', (req, res) => {
-    const { url } = req.body;
-    if (!url) {
-        return res.status(400).json({ error: "Missing 'url' parameter in JSON body." });
+// Challenge 4: CSRF Vulnerable Transfer Endpoint
+router.post('/transfer', (req, res) => {
+    const { recipient, amount } = req.body;
+    
+    if (!recipient || !amount) {
+        return res.status(400).json({ error: "Missing 'recipient' or 'amount' in request body." });
     }
 
-    const lowerUrl = url.toLowerCase();
-
-    // Blacklist firewall check
-    if (lowerUrl.includes('localhost') || lowerUrl.includes('127.0.0.1')) {
-        return res.status(403).json({
-            error: "Security Alert: Access to 'localhost' and '127.0.0.1' is strictly blocked by internal firewall rules!"
-        });
-    }
-
-    // Check for SSRF bypass IP/host representations targeting internal endpoint
-    const isBypass = /127\.1|0x7f|2130706433|::1|nip\.io|localtest/i.test(lowerUrl);
-    const targetsInternal = lowerUrl.includes('/internal/secret-key') || lowerUrl.includes('secret-key');
-
-    if (isBypass && targetsInternal) {
-        return res.json({
-            status: 200,
-            fetchedFrom: url,
-            internalResponse: {
-                access: "GRANTED",
-                service: "Internal Management Microservice",
-                flag: "FLAG{SSRF_FILTER_BYPASS_SUCCESS}"
-            }
-        });
-    }
-
-    res.json({
-        status: 200,
-        fetchedFrom: url,
-        response: "Target URL pinged successfully. No internal flags found."
+    return res.json({
+        status: "SUCCESS",
+        message: `Successfully transferred ${amount} employee credits to '${recipient}'!`,
+        vulnerability: "Cross-Site Request Forgery (No Anti-CSRF Token / SameSite validation)",
+        flag: "FLAG{CSRF_STATE_CHANGING_ATTACK}"
     });
 });
 

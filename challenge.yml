@@ -8,9 +8,9 @@ description: |
 
   Challenges included:
   1. HTML Source Flag
-  2. JWT Token Payload Flag
+  2. Base64 Token Payload Flag
   3. Robots.txt 404 Curl Flag
-  4. SSRF Localhost Filter Bypass Flag (HARD)
+  4. Cross-Site Request Forgery (CSRF) Flag
 
   Target URL: http://localhost:3000
 
@@ -21,7 +21,7 @@ flags:
   - FLAG{SOURCE_INSPECTOR}
   - FLAG{TOKEN_DECODER}
   - FLAG{CURL_ROBOTS_MASTER}
-  - FLAG{SSRF_FILTER_BYPASS_SUCCESS}
+  - FLAG{CSRF_STATE_CHANGING_ATTACK}
 files: []
 state: visible
 version: "0.1"

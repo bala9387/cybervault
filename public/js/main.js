@@ -48,23 +48,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Challenge 7: SSRF Button Handling
-    const ssrfBtn = document.getElementById('ssrfBtn');
-    if (ssrfBtn) {
-        ssrfBtn.addEventListener('click', async () => {
-            const url = document.getElementById('ssrfUrlInput').value;
-            const resElem = document.getElementById('ssrfResult');
-            resElem.textContent = "Sending webhook fetch request...";
+    // Challenge 4: CSRF Transfer Button Handling
+    const csrfBtn = document.getElementById('csrfBtn');
+    if (csrfBtn) {
+        csrfBtn.addEventListener('click', async () => {
+            const recipient = document.getElementById('csrfRecipient').value;
+            const amount = document.getElementById('csrfAmount').value;
+            const resElem = document.getElementById('csrfResult');
+            resElem.textContent = "Executing state-changing transfer request...";
             try {
-                const res = await fetch('/api/webhook', {
+                const res = await fetch('/api/transfer', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ url })
+                    body: JSON.stringify({ recipient, amount })
                 });
                 const data = await res.json();
                 resElem.textContent = JSON.stringify(data, null, 2);
             } catch (err) {
-                resElem.textContent = "Error testing webhook.";
+                resElem.textContent = "Error executing transfer.";
             }
         });
     }

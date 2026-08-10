@@ -1,0 +1,21 @@
+name: Cross-Site Request Forgery (CSRF)
+author: CyberVault Team
+category: Web
+difficulty: Medium
+description: |
+  CyberVault provides an employee credit transfer feature on the dashboard.
+  The server processes state-changing POST requests to /api/transfer without validating Anti-CSRF tokens or SameSite origin headers.
+  Perform a state-changing transfer request to capture the flag.
+
+  Target URL: https://cybervault-rho.vercel.app/dashboard
+  Flag Format: FLAG{...}
+value: 200
+type: standard
+flags:
+  - FLAG{CSRF_STATE_CHANGING_ATTACK}
+files: []
+state: visible
+version: "0.1"
+requirements: []
+hints:
+  - "Submit a POST request to /api/transfer with body JSON or form-data containing recipient and amount."
