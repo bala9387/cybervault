@@ -5,22 +5,25 @@ const jwt = require('jsonwebtoken');
 // Secret for JWT (Challenge 3)
 const JWT_SECRET = 'cybervault_super_secret_key_123';
 
-// Mock login (Accepts any username/password)
+// Login endpoint (Requires username: admin, password: Password)
 router.post('/login', (req, res) => {
-    const { username } = req.body;
-    const user = username || 'player';
+    const { username, password } = req.body;
 
-    // Generate JWT (Challenge 3)
-    const payload = {
-        sub: user,
-        role: "employee",
-        department: "IT",
-        flag: "FLAG{TOKEN_DECODER}"
-    };
+    if (username === 'admin' && password === 'Password') {
+        // Generate JWT (Challenge 3)
+        const payload = {
+            sub: "admin",
+            role: "employee",
+            department: "IT",
+            flag: "FLAG{TOKEN_DECODER}"
+        };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ success: true, token });
+        return res.json({ success: true, token });
+    } else {
+        return res.status(401).json({ success: false, error: "Invalid username or password. (Credentials: admin / Password)" });
+    }
 });
 
 // Challenge 2: Session Cookie validation

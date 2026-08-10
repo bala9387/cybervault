@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('token', data.token);
                     window.location.href = '/dashboard';
                 } else {
-                    errorMessage.textContent = 'Authentication failed.';
+                    errorMessage.textContent = data.error || 'Invalid credentials.';
                     errorMessage.classList.remove('hidden');
                 }
             } catch (err) {
@@ -47,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('token');
+            window.location.href = '/login';
+        });
+    }
+
     // IDOR Lookup Button Handling
     const fetchUserBtn = document.getElementById('fetchUserBtn');
     if (fetchUserBtn) {
