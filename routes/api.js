@@ -5,20 +5,20 @@ const jwt = require('jsonwebtoken');
 // Secret for JWT (Challenge 3)
 const JWT_SECRET = 'cybervault_super_secret_key_123';
 
-// Challenge 3: JWT Login endpoint (Requires username: admin, password: Password)
+// Login endpoint (Requires username: admin, password: Password)
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
     if (username === 'admin' && password === 'Password') {
-        // Generate JWT (Challenge 3)
-        const payload = {
+        // Generate Full Base64 Token containing payload JSON (Challenge 2)
+        const payloadObj = {
             sub: "admin",
             role: "employee",
             department: "IT",
             flag: "FLAG{TOKEN_DECODER}"
         };
 
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        const token = Buffer.from(JSON.stringify(payloadObj)).toString('base64');
 
         return res.json({ success: true, token });
     } else {

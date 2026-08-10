@@ -1,10 +1,10 @@
-name: JWT Token Decoder
+name: Base64 Token Decoder
 author: CyberVault Team
 category: Web
 difficulty: Easy
 description: |
   Log into the CyberVault employee portal using valid credentials.
-  After authenticating, inspect the storage mechanisms in your browser to recover the secret token.
+  After authenticating, inspect the storage mechanisms in your browser to recover the secret Base64 token.
 
   Credentials: admin / Password
   Target URL: https://cybervault-rho.vercel.app/login
@@ -18,4 +18,4 @@ state: visible
 version: "0.1"
 requirements: []
 hints:
-  - "Check browser Local Storage for a 'token' key and decode its Base64 JWT payload."
+  - "Check browser Local Storage for a 'token' key and decode the string using standard Base64 decoding (e.g. atob() in JS console)."
