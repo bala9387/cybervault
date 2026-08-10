@@ -39,7 +39,8 @@ app.get('/secret-vault', (req, res) => {
         res.type('text/plain');
         res.send("404 Not Found - Flag: FLAG{CURL_ROBOTS_MASTER}\n");
     } else {
-        res.send("<html><body><h1>404 Not Found</h1><p>Hint: Use curl to command line inspect this endpoint.</p></body></html>");
+        res.type('text/html');
+        res.send("<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>404 Not Found</h1><p>The requested URL /secret-vault was not found on this server.</p></body></html>");
     }
 });
 
