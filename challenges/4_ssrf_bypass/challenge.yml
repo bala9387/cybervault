@@ -1,0 +1,21 @@
+name: SSRF Firewall Bypass
+author: CyberVault Team
+category: Web
+difficulty: Hard
+description: |
+  CyberVault provides an external webhook gateway service on the employee dashboard.
+  The firewall strictly blocks access to 'localhost' and '127.0.0.1'.
+  Bypass the IP blacklist filter to query the internal microservice at /internal/secret-key and retrieve the secret flag.
+
+  Target URL: https://cybervault-rho.vercel.app/dashboard
+  Flag Format: FLAG{...}
+value: 300
+type: standard
+flags:
+  - FLAG{SSRF_FILTER_BYPASS_SUCCESS}
+files: []
+state: visible
+version: "0.1"
+requirements: []
+hints:
+  - "Try alternative loopback IP representations such as 127.1, 0x7f000001, 2130706433, or [::1] to bypass string filtering."

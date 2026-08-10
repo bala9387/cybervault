@@ -1,0 +1,20 @@
+name: Robots & Command Line Master
+author: CyberVault Team
+category: Web
+difficulty: Medium
+description: |
+  Search engines are restricted from crawling certain endpoints on CyberVault.
+  Find the hidden path in robots.txt and inspect it using command-line HTTP tools.
+
+  Target URL: https://cybervault-rho.vercel.app/robots.txt
+  Flag Format: FLAG{...}
+value: 200
+type: standard
+flags:
+  - FLAG{CURL_ROBOTS_MASTER}
+files: []
+state: visible
+version: "0.1"
+requirements: []
+hints:
+  - "Visiting the disallowed path in a standard browser gives a 404 page. Try requesting the URL via curl in your terminal!"

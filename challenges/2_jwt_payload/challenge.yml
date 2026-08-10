@@ -1,0 +1,21 @@
+name: JWT Token Decoder
+author: CyberVault Team
+category: Web
+difficulty: Easy
+description: |
+  Log into the CyberVault employee portal using valid credentials.
+  After authenticating, inspect the storage mechanisms in your browser to recover the secret token.
+
+  Credentials: admin / Password
+  Target URL: https://cybervault-rho.vercel.app/login
+  Flag Format: FLAG{...}
+value: 100
+type: standard
+flags:
+  - FLAG{TOKEN_DECODER}
+files: []
+state: visible
+version: "0.1"
+requirements: []
+hints:
+  - "Check browser Local Storage for a 'token' key and decode its Base64 JWT payload."

@@ -1,0 +1,20 @@
+name: HTML Source Inspector
+author: CyberVault Team
+category: Web
+difficulty: Easy
+description: |
+  A hidden secret was left behind during the deployment of the CyberVault home page.
+  Inspect the page source to recover the flag.
+
+  Target URL: https://cybervault-rho.vercel.app/
+  Flag Format: FLAG{...}
+value: 100
+type: standard
+flags:
+  - FLAG{SOURCE_INSPECTOR}
+files: []
+state: visible
+version: "0.1"
+requirements: []
+hints:
+  - "Sometimes web developers leave comments in the HTML source code that aren't rendered on the webpage."
