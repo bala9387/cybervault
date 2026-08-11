@@ -1,15 +1,17 @@
-name: Cross-Site Request Forgery (CSRF)
+name: Real-Life CSRF Double Bypass
 author: CyberVault Team
 category: Web
-difficulty: Medium
+difficulty: Hard
 description: |
-  CyberVault provides an employee credit transfer feature on the dashboard.
-  The server processes state-changing POST requests to /api/transfer without validating Anti-CSRF tokens or SameSite origin headers.
-  Perform a state-changing transfer request to capture the flag.
+  CyberVault's credit transfer feature at /api/transfer is guarded by two security controls:
+  1. A Referer header domain check.
+  2. An Anti-CSRF token check.
+
+  Analyze the backend logic to find flaws in BOTH security controls and execute a successful cross-site state-changing request to capture the flag.
 
   Target URL: https://cybervault-rho.vercel.app/dashboard
   Flag Format: FLAG{...}
-value: 200
+value: 300
 type: standard
 flags:
   - FLAG{CSRF_STATE_CHANGING_ATTACK}
@@ -18,4 +20,5 @@ state: visible
 version: "0.1"
 requirements: []
 hints:
-  - "Submit a POST request to /api/transfer with body JSON or form-data containing recipient and amount."
+  - "Hint 1: What happens if the csrf_token parameter is completely omitted from the POST request body?"
+  - "Hint 2: How does the server inspect the Referer header? Can you trick a substring check using a URL query parameter like ?cybervault?"

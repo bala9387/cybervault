@@ -62,14 +62,15 @@
 
                 <!-- CSRF Card -->
                 <div class="card glass-panel col-span-2">
-                    <h2>Employee Credit Transfer Portal (CSRF Challenge)</h2>
-                    <p style="font-size:0.9rem; color:#94a3b8; margin-bottom:1rem;">Executes state-changing credit transfers via <code>POST /api/transfer</code> without anti-CSRF token protection.</p>
+                    <h2>Employee Credit Transfer Portal (HARD CSRF Challenge)</h2>
+                    <p style="font-size:0.9rem; color:#94a3b8; margin-bottom:1rem;">Executes state-changing credit transfers via <code>POST /api/transfer</code> guarded by a Referer firewall & Anti-CSRF Token check.</p>
                     <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem; flex-wrap:wrap;">
-                        <input type="text" id="csrfRecipient" value="attacker_account" placeholder="Recipient" style="flex:1; min-width:150px; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
-                        <input type="number" id="csrfAmount" value="500" placeholder="Amount" style="width:100px; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
+                        <input type="text" id="csrfRecipient" value="attacker_account" placeholder="Recipient" style="flex:1; min-width:140px; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
+                        <input type="number" id="csrfAmount" value="500" placeholder="Amount" style="width:90px; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
+                        <input type="text" id="csrfToken" value="invalid_token_123" placeholder="CSRF Token" style="flex:1; min-width:140px; padding:0.5rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:6px; color:#fff; font-family:inherit;">
                         <button id="csrfBtn" class="btn" style="padding:0.5rem 1rem;">Transfer Credits</button>
                     </div>
-                    <pre id="csrfResult" style="background:rgba(15,23,42,0.8); padding:1rem; border-radius:6px; font-family:monospace; font-size:0.875rem; color:#06b6d4; overflow-x:auto; white-space:pre-wrap;">Click "Transfer Credits" to send request...</pre>
+                    <pre id="csrfResult" style="background:rgba(15,23,42,0.8); padding:1rem; border-radius:6px; font-family:monospace; font-size:0.875rem; color:#06b6d4; overflow-x:auto; white-space:pre-wrap;">Click "Transfer Credits" to test transfer...</pre>
                 </div>
             </section>
         </main>

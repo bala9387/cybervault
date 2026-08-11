@@ -54,13 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
         csrfBtn.addEventListener('click', async () => {
             const recipient = document.getElementById('csrfRecipient').value;
             const amount = document.getElementById('csrfAmount').value;
+            const csrf_token = document.getElementById('csrfToken').value;
             const resElem = document.getElementById('csrfResult');
             resElem.textContent = "Executing state-changing transfer request...";
             try {
                 const res = await fetch('/api/transfer', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ recipient, amount })
+                    body: JSON.stringify({ recipient, amount, csrf_token })
                 });
                 const data = await res.json();
                 resElem.textContent = JSON.stringify(data, null, 2);

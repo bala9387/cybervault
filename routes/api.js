@@ -26,18 +26,38 @@ router.post('/login', (req, res) => {
     }
 });
 
-// Challenge 4: CSRF Vulnerable Transfer Endpoint
+// Challenge 4: HARD Real-Life CSRF Transfer Endpoint (Token Omission + Referer Substring Bypass)
+const VALID_CSRF_TOKEN = "cv_csrf_9f8e7d6c5b4a3";
+
 router.post('/transfer', (req, res) => {
-    const { recipient, amount } = req.body;
-    
+    const { recipient, amount, csrf_token } = req.body;
+    const referer = req.headers.referer || req.headers.origin || '';
+
     if (!recipient || !amount) {
         return res.status(400).json({ error: "Missing 'recipient' or 'amount' in request body." });
     }
 
+    // Protection 1: Referer Validation (Flawed Substring Check)
+    if (referer && !referer.toLowerCase().includes('cybervault')) {
+        return res.status(403).json({
+            error: "Security Firewall Alert: Request rejected! Referer header must originate from trusted domain containing 'cybervault'."
+        });
+    }
+
+    // Protection 2: Anti-CSRF Token Check (Flawed: Only checks token if parameter is explicitly provided!)
+    if (csrf_token !== undefined && csrf_token !== "" && csrf_token !== VALID_CSRF_TOKEN) {
+        return res.status(403).json({
+            error: "Security Alert: Invalid Anti-CSRF Token provided!"
+        });
+    }
+
     return res.json({
         status: "SUCCESS",
-        message: `Successfully transferred ${amount} employee credits to '${recipient}'!`,
-        vulnerability: "Cross-Site Request Forgery (No Anti-CSRF Token / SameSite validation)",
+        message: `State-changing transfer executed! Successfully sent ${amount} credits to '${recipient}'.`,
+        bypassesUsed: [
+            "Anti-CSRF Token validation bypassed via parameter omission (csrf_token parameter removed)",
+            "Referer header WAF filter bypassed via domain substring query parameter (?cybervault)"
+        ],
         flag: "FLAG{CSRF_STATE_CHANGING_ATTACK}"
     });
 });
